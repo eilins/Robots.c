@@ -17,30 +17,27 @@ typedef struct
 } 
 
 int main(void)
+{
     int a, b; /*contadores*/
     int vez;  /*opção que vai selecionar de quem sera a vez de jogar, do computador ou do jogador.*/
 
+    vez*= -1
+        while
+        {
+            if(vez= -1)
+                homemjoga();
+            else
+                computadorjoga():
+        }
+}         
+
 /*void humanojoga(void) / void computadorjoga(void) - prototipos para vez de quem vai jogar */
 
-    srand(time(NULL)); /*vai gerar uma nova posicao diferente a cada nova partida para o robo*/
-    vez=0;
-    vez=1;
-    do
-    {
-        if(vez==0)
-            jogadorjoga();
-        if(vez==1)
-            computadorjoga();
-    }while /*condicao para saida*/
-    
-    return EXIT_SUCCESS;
-}
-
-/*void menu(void)
+void menu(void)
 { 
     printf("\n(c) - cima\n(b) - baixo\n(t) - teletransporte\n(x) - sair\n(e) - esquerda\n(d) - direita\n(s) - salvar\n");
     return;
-} */
+}
 
 /*Sequencia de raciocinio para montar o programa:
  * 1- Funçao para imprimir as opçoes do robo ( acho que a função menu de cima como comentario resolve isso, ou parte), e imprimir a matriz com o jogador, robo e as pedras.
@@ -52,3 +49,4 @@ int main(void)
  *  5.2 - Caso de game over o jogador perde toda a pontuacao.
  *  5.3 - Destruiu um robo, ganha 10 pontos.
  *  5.4 - Passou de nivel , ganha 50 pontos. */
+
