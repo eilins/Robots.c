@@ -20,7 +20,7 @@ int main(void)
 {
     int a, b; /*contadores*/
     int vez;  /*opção que vai selecionar de quem sera a vez de jogar, do computador ou do jogador.*/
-
+    srand(time(NULL)); /* Vai gerar uma nova posicao para o robo a cada inicio de uma nova partida*/
     vez*= -1
         while
         {
@@ -42,7 +42,7 @@ void menu(void)
 /*Sequencia de raciocinio para montar o programa:
  * 1- Funçao para imprimir as opçoes do robo ( acho que a função menu de cima como comentario resolve isso, ou parte), e imprimir a matriz com o jogador, robo e as pedras.
  * 2- Função para o movimento do robo quando for a vez do computador jogar.
- * 3- Criterio de parada para caso o jogador morra ou chegue ao nivel 3.
+ * 3- Criterio de parada para caso o jogador morra ou chegue ao nivel 5.
  * 4- Estabalecer a pontução do jogador a cada nova conquista ou perda (score).
  * 5- Regras do score:
  *  5.1 - A cada teletransporte que o jogador usar ele perderá 5 pontos e ele so tera direito a 2 por partida.
