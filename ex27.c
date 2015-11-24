@@ -10,11 +10,11 @@
 
 #define TAB 10 /*Criacao da matriz 10x10*/
 #define MAXTAB 100 /* Sao as 99 posicoes existentes no mapa para o robo iniciar a partida*/
-
+#define POS MAXTAB /*valor que as coordenadas vao assumir no mapa*/
 typedef struct
 {
     int matriz[TAB][TAB];
-} 
+}dados d;
 
 int main(void)
 {
@@ -30,6 +30,70 @@ int main(void)
                 computadorjoga():
         }
 }         
+
+dados inicializa(void)
+{
+    int x, y, z;
+    for(x=0; x<MAXTAB; x++)
+        for(y=0; y<MAXTAB; y++)
+            d.tab[x][y]=0 /*posição livre*/
+
+    
+    x=randomPos();
+    d.tab[Pos][x%Pos]=1 /*pedra*/
+    
+        
+    x=randomPos();
+    d.tab[Pos][x%Pos]=2 /*humano*/
+   
+   /* x=randomPos(); -- a função rand()%Pos justamente para que a pedra/humano/robo possa a cada nova partida iniciar numa das 99 posicoes distintas existentes.
+    d.tab[Pos][x%Pos]=3 - robo*/
+
+void imprimemapa(void)
+{
+    int x, y;
+
+    system("clear || cls"); /*limpar a tela tanto em linux quanto no windows*/
+    printf("\n -");
+    for(x=0; x<MAXTAB; x++) /*borda superior*/
+    printf(" -");
+printf(" -");
+    
+    for(x=0; x<MAXTAB; x++)
+    {
+        printf("\n|"); /*fazer a borda da equerda*/
+        for(y=0; y<MAXTAB; y++) /* desenhar o mapa*/
+        {
+            switch(d.tab[x][y]) /*iniciar mapa já com os elementos dentro*/
+            {
+                case 1:
+                    printf(". "); /*espaco livre*/
+                    break;
+                case 2:
+                    printf("*"); /*pedra*/
+                    break;
+                case 3:
+                    printf("@"); /*robo*/
+                    break;
+                case 4:
+                    printf("I"); /*homem*/
+                    break;
+                default:
+                    printf("\nErro na construcao do mapa.");
+            }
+        }
+
+        printf("|"); /* forma borda direita*/
+    }
+
+    printf("\n-"); /*forma borda inferior*/
+    for(x=0; x<MAXTAB; x++)
+        printf(" -");
+    printf(" -\n");
+    imprimemenu();
+    return;
+}
+
 
 /*void humanojoga(void) / void computadorjoga(void) - prototipos para vez de quem vai jogar */
 
