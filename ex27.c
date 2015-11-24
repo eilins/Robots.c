@@ -14,14 +14,20 @@
 typedef struct
 {
     int matriz[TAB][TAB];
-}dados d;
+}dados;
+
+dados inicializa(void);
+void imprimemapa(void);
+void menu(void);
+
+dados d;
 
 int main(void)
 {
     int a, b; /*contadores*/
     int vez;  /*opção que vai selecionar de quem sera a vez de jogar, do computador ou do jogador.*/
     srand(time(NULL)); /* Vai gerar uma nova posicao para o robo a cada inicio de uma nova partida*/
-    vez*= -1
+    vez*= -1;
         while
         {
             if(vez= -1)
@@ -36,24 +42,23 @@ dados inicializa(void)
     int x, y, z;
     for(x=0; x<MAXTAB; x++)
         for(y=0; y<MAXTAB; y++)
-            d.tab[x][y]=0 /*posição livre*/
+            d.matriz[x][y]=0; /*posição livre*/
 
     
-    x=randomPos();
-    d.tab[Pos][x%Pos]=1 /*pedra*/
+    x=randomPOS();
+    d.matriz[POS][x%POS]=1; /*pedra*/
     
         
-    x=randomPos();
-    d.tab[Pos][x%Pos]=2 /*humano*/
+    x=randomPOS();
+    d.matriz[POS][x%POS]=2; /*humano*/
    
-   /* x=randomPos(); -- a função rand()%Pos justamente para que a pedra/humano/robo possa a cada nova partida iniciar numa das 99 posicoes distintas existentes.
-    d.tab[Pos][x%Pos]=3 - robo*/
+   /* x=randomPOS(); -- a função rand()%POS justamente para que a pedra/humano/robo possa a cada nova partida iniciar numa das 99 posicoes distintas existentes.
+    d.matriz[POS][x%POS]=3 - robo*/
 
 void imprimemapa(void)
 {
     int x, y;
 
-    system("clear || cls"); /*limpar a tela tanto em linux quanto no windows*/
     printf("\n -");
     for(x=0; x<MAXTAB; x++) /*borda superior*/
     printf(" -");
@@ -64,7 +69,7 @@ printf(" -");
         printf("\n|"); /*fazer a borda da equerda*/
         for(y=0; y<MAXTAB; y++) /* desenhar o mapa*/
         {
-            switch(d.tab[x][y]) /*iniciar mapa já com os elementos dentro*/
+            switch(d.matriz[x][y]) /*iniciar mapa já com os elementos dentro*/
             {
                 case 1:
                     printf(". "); /*espaco livre*/
@@ -103,12 +108,13 @@ void menu(void)
     return;
 }
 
-return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
+}
 /*Sequencia de raciocinio para montar o programa:
  * 1- Funçao para imprimir as opçoes do robo ( acho que a função menu de cima como comentario resolve isso, ou parte), e imprimir a matriz com o jogador, robo e as pedras.
  * 2- Função para o movimento do robo quando for a vez do computador jogar.
  * 3- Criterio de parada para caso o jogador morra ou chegue ao nivel 5.
- * 4- Estabalecer a pontução do jogador a cada nova conquista ou perda (score).
+ * 4- Esmatrizalecer a pontução do jogador a cada nova conquista ou perda (score).
  * 5- Regras do score:
  *  5.1 - A cada teletransporte que o jogador usar ele perderá 5 pontos e ele so tera direito a 2 por partida.
  *  5.2 - Caso de game over o jogador perde toda a pontuacao.
