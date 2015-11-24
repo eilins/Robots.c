@@ -39,6 +39,7 @@ void menu(void)
     return;
 }
 
+return EXIT_SUCCESS;
 /*Sequencia de raciocinio para montar o programa:
  * 1- Funçao para imprimir as opçoes do robo ( acho que a função menu de cima como comentario resolve isso, ou parte), e imprimir a matriz com o jogador, robo e as pedras.
  * 2- Função para o movimento do robo quando for a vez do computador jogar.
