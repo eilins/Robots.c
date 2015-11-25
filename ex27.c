@@ -28,32 +28,32 @@ int main(void)
     int vez;  /*opção que vai selecionar de quem sera a vez de jogar, do computador ou do jogador.*/
     srand(time(NULL)); /* Vai gerar uma nova posicao para o robo a cada inicio de uma nova partida*/
     vez*= -1;
-        while
-        {
-            if(vez= -1)
-                homemjoga();
-            else
-                computadorjoga():
-        }
-}         
+    do
+    {
+        if(vez= -1)
+            homemjoga();
+        else
+            computadorjoga();
+    }while(vez==5)
+;}         
+/*
+   dados inicializa(void)
+   {
+/*   int x, y, z;
+for(x=0; x<MAXTAB; x++)
+for(y=0; y<MAXTAB; y++)
+d.matriz[x][y]=0; /*posição livre*/
 
-dados inicializa(void)
-{
-    int x, y, z;
-    for(x=0; x<MAXTAB; x++)
-        for(y=0; y<MAXTAB; y++)
-            d.matriz[x][y]=0; /*posição livre*/
 
-    
-    x=randomPOS();
-    d.matriz[POS][x%POS]=1; /*pedra*/
-    
-        
-    x=randomPOS();
-    d.matriz[POS][x%POS]=2; /*humano*/
-   
-   /* x=randomPOS(); -- a função rand()%POS justamente para que a pedra/humano/robo possa a cada nova partida iniciar numa das 99 posicoes distintas existentes.
-    d.matriz[POS][x%POS]=3 - robo*/
+/*   x=randomPOS();
+     d.matriz[POS][x%POS]=1; /*pedra*/
+
+
+/* x=randomPOS();
+   d.matriz[POS][x%POS]=2;  /*humano*/
+
+/* x=randomPOS(); -- a função rand()%POS justamente para que a pedra/humano/robo possa a cada nova partida iniciar numa das 99 posicoes distintas existentes.
+   d.matriz[POS][x%POS]=3 - robo*/
 
 void imprimemapa(void)
 {
@@ -61,9 +61,9 @@ void imprimemapa(void)
 
     printf("\n -");
     for(x=0; x<MAXTAB; x++) /*borda superior*/
+        printf(" -");
     printf(" -");
-printf(" -");
-    
+
     for(x=0; x<MAXTAB; x++)
     {
         printf("\n|"); /*fazer a borda da equerda*/
@@ -105,11 +105,9 @@ printf(" -");
 void menu(void)
 { 
     printf("\n(c) - cima\n(b) - baixo\n(t) - teletransporte\n(x) - sair\n(e) - esquerda\n(d) - direita\n(s) - salvar\n");
-    return;
-}
-
     return EXIT_SUCCESS;
 }
+
 /*Sequencia de raciocinio para montar o programa:
  * 1- Funçao para imprimir as opçoes do robo ( acho que a função menu de cima como comentario resolve isso, ou parte), e imprimir a matriz com o jogador, robo e as pedras.
  * 2- Função para o movimento do robo quando for a vez do computador jogar.
