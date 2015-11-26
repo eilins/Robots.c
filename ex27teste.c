@@ -15,7 +15,8 @@ typedef struct
 
 dados ini(void);            /*comeco de uma partida*/
 dados preenchezero(dados d);
-void imprimetab(void);      /*representacao do tabuleiro*/
+void imprimetab(dados d);      /*representacao do tabuleiro*/
+int livreposicao(dados d, int i, int j);
 void imprimemenu(void);     /*criar menu de opcoes para usuario*/
 dados preenchemundo(dados d, int nivel);
 
@@ -29,7 +30,7 @@ int main(void)
     ini();
     do
     {
-        vez=*-1;
+        vez*=-1;
         if(vez==1)
             /*chamada para imprimir a funcao*/
             vez=humanojoga();
@@ -39,6 +40,7 @@ int main(void)
             if(vez == 2)
             { 
                 imprimetab();
+                printf("Bem vindo\n");
             }
         }
 
@@ -53,21 +55,21 @@ dados preenchezero(dados d)
 
     int x, y;
 
-    for(x=0; x<MAXTAB; x++)
-        for(y=0; y<MAXTAB; y++)
-            d.tabela[x][y]=0
-    return d;
+    for(x=0; x<TABMAX; x++)
+        for(y=0; y<TABMAX; y++)
+            d.tabela[x][y]=0;
+                return d;
 }
-void imprimetab(void)
+void imprimetab(dados d)
 {
     int x, y;
-   
+
     printf("\n");
-    for(x=0;x<MAXTAB;x++) /*  borda de cima */
+    for(x=0;x<TABMAX;x++) /*  borda de cima */
         printf("- ");
     printf("\n");
 
-    for(x=0;x<MAXTAB;x++)
+    for(x=0;x<TABMAX;x++)
     {
         printf("| ");      /*  borda esquerda */
         for(y=0;y<TABMAX;y++)/* mapa */
@@ -90,7 +92,7 @@ void imprimetab(void)
         }
         printf("|\n");/* borda direita */
     }
-    for(x=0;x<MAXTAB;x++)
+    for(x=0;x<TABMAX;x++)
         printf("- ");
     printf("\n");
     imprimemenu();
@@ -132,4 +134,20 @@ dados preenchemundo(dados d, int nivel)
     }
     return d;
 
+}
+
+int livreposicao(dados d, int i, int j)
+{
+    if(i>=0 && i<10)
+        if(j>=0 && j<10)
+        {
+            if(d.tabela[i][j]==0)
+                return 1;
+            else
+                return 0;
+        }
+        else 
+            return 0;
+    else
+        return 0;
 }
