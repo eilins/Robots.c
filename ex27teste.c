@@ -4,8 +4,9 @@
 
 #define TABMAX 10 /*mapa*/
 #define TABPOS 100 /* mapa - posicoes*/
-#define MODP TABMAX /*limite de xy-ij no mapa*/
+#define POS TABMAX /*limite de xy-ij no mapa*/
 
+/*prototipo*/
 typedef struct
 {
     int tabela[TABMAX][TABMAX];
@@ -13,50 +14,68 @@ typedef struct
 }dados;
 
 dados ini(void);            /*comeco de uma partida*/
+dados preenchezero(dados d);
 void imprimetab(void);      /*representacao do tabuleiro*/
 void imprimemenu(void);     /*criar menu de opcoes para usuario*/
-
-dados d;
+dados preenchemundo(dados d, int nivel);
 
 int main(void)
 {
+    int x=0, y; 
     int vez=-1;
+    int nivel=5;
     srand(time(NULL));
-
+    dados d;
     ini();
     do
     {
-        imprimetab();
-        vez=vez*-1;
+        vez=*-1;
         if(vez==1)
-            vezhumano();
-        /* if(vez==-1)
-         *           vezpc();*/ 
+            /*chamada para imprimir a funcao*/
+            vez=humanojoga();
+        else if(vez==-1)
+        {
+            vez=computadorjoga();
+            if(vez == 2)
+            { 
+                imprimetab();
+            }
+        }
 
     }
-    while(vez==5);
+    while(vez==2);
 
     return EXIT_SUCCESS;
 }
 
+dados preenchezero(dados d)
+{
+
+    int x, y;
+
+    for(x=0; x<MAXTAB; x++)
+        for(y=0; y<MAXTAB; y++)
+            d.tabela[x][y]=0
+    return d;
+}
 void imprimetab(void)
 {
-    int i,j;
-    printf("\e[H\e[2J");
-    printf("\n-");
-    for(i=0;i<TABMAX;i++) /*  borda de cima */
-        printf(" -");
-    printf(" -");
+    int x, y;
+   
+    printf("\n");
+    for(x=0;x<MAXTAB;x++) /*  borda de cima */
+        printf("- ");
+    printf("\n");
 
-    for(i=0;i<TABMAX;i++)
+    for(x=0;x<MAXTAB;x++)
     {
-        printf("\n| ");      /*  borda esquerda */
-        for(j=0;j<TABMAX;j++)/* mapa */
+        printf("| ");      /*  borda esquerda */
+        for(y=0;y<TABMAX;y++)/* mapa */
         {
-            switch(d.tabela[i][j])
+            switch(d.tabela[x][y])
             {
                 case 0:/* vazio */
-                    printf("  ");
+                    printf(". ");
                     break;
                 case 1:/* pedra */
                     printf("& ");
@@ -66,14 +85,14 @@ void imprimetab(void)
                     break;
                 case 3:/* robos */
                     printf("# ");
+                    break;
             }
         }
-        printf("|");/* borda direita */
+        printf("|\n");/* borda direita */
     }
-    printf("\n-");/*  borda de baixo */
-    for(i=0;i<TABMAX;i++)
-        printf(" -");
-    printf(" -\n");
+    for(x=0;x<MAXTAB;x++)
+        printf("- ");
+    printf("\n");
     imprimemenu();
     return;
 }
@@ -82,4 +101,35 @@ void imprimemenu(void)
 {
     printf("\n[w] cima\n[a] esquerda\n[s] baixo\n[d] direita\n(q) teleporte\n[e] sair do jogo?\n?");
     return;
+}
+
+dados preenchemundo(dados d, int nivel)
+{
+    int x;
+    int i, j;
+    int posicaolivre;
+
+    do
+    {
+        i=rand()%10;
+        j=rand()%10;
+        posicaolivre=livreposicao(d, i, j);
+        if(posicaolivre==1)
+            d.tabela[i][j]=2;
+    }
+    while(!posicaolivre);
+    for(x=0; x<(nivel*2); x++)
+    {
+        do
+        {
+            i=rand()%10;
+            j=rand()%10;
+            posicaolivre=livreposicao(d, i, j);
+            if(posicaolivre==1)
+                d.tabela[i][j]=3;
+        }
+        while(!posicaolivre);
+    }
+    return d;
+
 }
