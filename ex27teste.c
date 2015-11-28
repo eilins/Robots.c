@@ -15,7 +15,7 @@ typedef struct
 
 dados ini(void);            /*comeco de uma partida*/
 dados preenchezero(dados d);
-void imprimetab(dados d);      /*representacao do tabuleiro*/
+void imprimetab(/*dados d*/);      /*representacao do tabuleiro*/
 int livreposicao(dados d, int i, int j);
 void imprimemenu(void);     /*criar menu de opcoes para usuario*/
 dados preenchemundo(dados d, int nivel);
@@ -60,9 +60,10 @@ dados preenchezero(dados d)
             d.tabela[x][y]=0;
                 return d;
 }
-void imprimetab(dados d)
+void imprimetab(/*dados d*/)
 {
     int x, y;
+    dados d;
 
     printf("\n");
     for(x=0;x<TABMAX;x++) /*  borda de cima */
