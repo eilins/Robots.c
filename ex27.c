@@ -176,7 +176,7 @@ void mover(char tecla)
                 if(A.posicao[n1][n2] == 1)
                 {
                     A.posicao[n1][n2] = 0;
-                    A.posicao[n1-1][n2] = 1; /*nao pode ser -1 pq fica igual ao caso do 'w'.*/
+                    A.posicao[n1+1][n2] = 1; /*nao pode ser -1 pq fica igual ao caso do 'w'.*/
                 }
             }
         }    
@@ -185,7 +185,7 @@ void mover(char tecla)
 
 void teleporte(char tecla)
 {   
-    int n1,n2;
+    int n1,n2, tn1, tn2, comando, comandoinvalido, sair, d;
     char TECLA;
     srand(time(NULL));
     // Lh.N1=rand()%LMAX;
@@ -194,14 +194,46 @@ void teleporte(char tecla)
     if(TECLA == 't')
     {
         for(n1=0;n1<LMAX; n1++)
-            for(n2=0;n2<CMAX;n2++)
-                if(A.posicao[n1][n2] == 1)
+         for(n2=0;n2<CMAX;n2++)
+            if(A.posicao[n1][n2] == 1)
                 {
-                    Lh.N1=rand()%LMAX;
-                    Lh.N2=rand()%CMAX;
+                   // Lh.N1=rand()%LMAX;
+                   // Lh.N2=rand()%CMAX;
+                    A.posicao[tn1][tn2]=1;
+                    A.posicao[n1][n2]=0;
                 }
     }
+
+    switch(comando)
+    {
+        case 'x':
+            printf("\n Voce tem certeza que deseja sair do jogo? (S - sim / N - nao)\n: ");
+        do
+        {
+            do
+            {
+                sair=getchar();
+            }while(sair=='\n');
+
+            if (sair!='S' && sair!='N')
+            {
+                printf("\nComando invalido!\n: ");
+                comandoinvalido=1;
+            }
+            else
+            {
+                comandoinvalido=0;
+                if(sair=='S')
+                    exit(1);
+                if(sair=='N')
+                    return d;
+            } 
+        }
+        while(comandoinvalido);
+    }
+    return d;
 }
+
 void moverrobo(char tecla)
 {
 
