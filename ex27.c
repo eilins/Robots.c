@@ -186,11 +186,12 @@ void mover(char tecla)
 void teleporte(char tecla)
 {   
     int n1,n2;
+    char TECLA;
     srand(time(NULL));
-   // Lh.N1=rand()%LMAX;
-   // Lh.N2=rand()%CMAX;
+    // Lh.N1=rand()%LMAX;
+    // Lh.N2=rand()%CMAX;
     
-    if((tecla == 't'))
+    if(TECLA == 't')
     {
         for(n1=0;n1<LMAX; n1++)
             for(n2=0;n2<CMAX;n2++)
@@ -203,6 +204,7 @@ void teleporte(char tecla)
 }
 void moverrobo(char tecla)
 {
+
     if(Lr.N1>Lh.N1 && Lr.N2>Lh.N2)
     {
         Lr.N1--;
