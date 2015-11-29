@@ -1,3 +1,10 @@
+/*Ex27.c: Desenvolver o jogo Robots em linguagem C.
+ * Autores: 
+ * Flavio Henrique Duarte Santos Filhos
+ * Vinicius Lins de Sa
+ * Orientador: Ruben C. Benante
+ * Disciplina: Informatica para Automacao e Controle*/
+
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +39,7 @@ int main(void)
     char TECLA;
     int tecla;
     valinit(NIVEL);
-    
+
     while( morto == 0 )/*|| sair ==0 ) || (NIVELUP == 0)) */
     {
         tabuleiro(NIVEL);
@@ -118,7 +125,7 @@ void tabuleiro(int nivel)
 
 void mover(char tecla)
 {
-    int n1,n2;
+    int n1, n2;
 
     printf(" ----------- %c ------------- \n",tecla);
 
@@ -131,9 +138,9 @@ void mover(char tecla)
                 if(A.posicao[n1][n2] == 1)
                 {
                     A.posicao[n1][n2] = 0;
-                   // printf("%d %d\n", n1, n2-1);
+                    // printf("%d %d\n", n1, n2-1);
                     A.posicao[n1][(n2+1)] = 1;
-                   // printf("&&& A.posicao[%d][%d] = %d '1'\n", n1, n2+1, A.posicao[n1][n2+1]);
+                    // printf("&&& A.posicao[%d][%d] = %d '1'\n", n1, n2+1, A.posicao[n1][n2+1]);
                     break;
                 }
             }
@@ -168,11 +175,11 @@ void mover(char tecla)
                     break;
                 }
             }
-       }
+        }
     }
     if((tecla == 's')) //&& (Lh.N1<LMAX))
     {
-    int enable=0;
+        int enable=0;
 
         for(n1=0;n1<LMAX;n1++)
         {
@@ -191,8 +198,8 @@ void mover(char tecla)
     }
     if(tecla == 't')
     {
-    int tn1, tn2;
-        
+        int tn1, tn2;
+
         for(n1=0;n1<LMAX;n1++)
         {
             for(n2=0;n2<CMAX;n2++)
@@ -209,84 +216,110 @@ void mover(char tecla)
     }
 }
 
-void teleporte(char tecla)
-{   
-    int n1,n2,comando, comandoinvalido, sair, d;
-    char TECLA;
-    srand(time(NULL));
-
-     //   Lh.N1=rand()%LMAX;
-     //   Lh.N2=rand()%CMAX;
-    
-    switch(comando)
-    {
-        case 'x':
-            printf("\n Voce tem certeza que deseja sair do jogo? (S - sim / N - nao)\n: ");
-        do
-        {
-            do
-            {
-                sair=getchar();
-            }while(sair=='\n');
-
-            if (sair!='S' && sair!='N')
-            {
-                printf("\nComando invalido!\n: ");
-                comandoinvalido=1;
-            }
-            else
-            {
-                comandoinvalido=0;
-                if(sair=='S')
-                    exit(1);
-                if(sair=='N')
-                    return d;
-            } 
-        }
-        while(comandoinvalido);
-    }
-    return d;
-}
-
 void moverrobo(char tecla)
 {
 
+    int r1, r2;
+
     if(Lr.N1>Lh.N1 && Lr.N2>Lh.N2)
     {
-        Lr.N1--;
-        Lr.N2--;
+        for(r1=0;r1<LMAX;r1--)
+            for(r2=0;r2<CMAX;r2--)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[(r1-1)][r2] = 1;
+                }
+        
     }
-   
+
     if(Lr.N1<Lh.N1 && Lr.N2>Lh.N2)
-    {
-        Lr.N1++;
-        Lr.N2--;
+    { 
+        for(r1=0;r1<LMAX;r1++)
+            for(r2=0;r2<CMAX;r2--)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[(r1+1)][r2] = 1;
+                }
+        
     }
+
     if(Lr.N1<Lh.N1 && Lr.N2<Lh.N2)
-    {
-        Lr.N1++;
-        Lr.N2++;
+    { 
+        for(r1=0;r1<LMAX;r1++)
+            for(r2=0;r2<CMAX;r2++)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[(r1)][(r2-1)] = 1;
+                }
+       
     }
+
+
     if(Lr.N1>Lh.N1 && Lr.N2<Lh.N2)
     {
-        Lr.N1--;
-        Lr.N2++;
+        for(r1=0;r1<LMAX;r1--)
+            for(r2=0;r2<CMAX;r2++)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[r1][(r2+1)] = 1;
+                }
+       
     }
+
     if(Lr.N1==Lh.N1 && Lr.N2>Lh.N2)
-    {
-        Lr.N2--;
+    { 
+            for(r2=0;r2<CMAX;r2--)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[(r1)][(r2-1)] = 1;
+                }
+
+        
     }
+
     if(Lr.N1==Lh.N1 && Lr.N2<Lh.N2)
     {
-        Lr.N2++;
+       // for(r1=0;r1<LMAX;r1--)
+            for(r2=0;r2<CMAX;r2++)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[r1][(r2-1)] = 1;
+                }
+
+
+        
     }
+
     if(Lr.N1>Lh.N1 && Lr.N2==Lh.N2)
     {
-        Lr.N1--;
+        for(r1=0;r1<LMAX;r1--)
+           // for(r2=0;r2<CMAX;r2--)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[(r1-1)][r2] = 1;
+                }
+
+
+        
     }
+
     if(Lr.N1<Lh.N1 && Lr.N2==Lh.N2)
     {
-        Lr.N1++;
+        for(r1=0;r1<LMAX;r1++)
+           // for(r2=0;r2<CMAX;r2--)
+                if(A.posicao[r1][r2] == 1)
+                {
+                    A.posicao[r1][r2] = 0;
+                    A.posicao[(r1+1)][r2] = 1;
+                }
+        
     }
 }
 
