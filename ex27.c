@@ -99,7 +99,7 @@ void tabuleiro(int nivel)
         for(n2=0;n2<LMAX;n2++)/* mapa */
         {
             if(A.posicao[n1][n2] == 1)
-                printf(" H");
+                printf(" I");
             else if(A.Ppedra[n1][n2] == 1)
                 printf(" @");
             else if(A.Probos[n1][n2] == 1)
@@ -132,8 +132,9 @@ void mover(char tecla)
                 {
                     A.posicao[n1][n2] = 0;
                    // printf("%d %d\n", n1, n2-1);
-                    A.posicao[n1][n2+1] = 1;
-                    // printf("&&& A.posicao[%d][%d] = %d '1'\n", n1, n2+1, A.posicao[n1][n2+1]);
+                    A.posicao[n1][(n2+1)] = 1;
+                   // printf("&&& A.posicao[%d][%d] = %d '1'\n", n1, n2+1, A.posicao[n1][n2+1]);
+                    break;
                 }
             }
         }    
@@ -147,7 +148,8 @@ void mover(char tecla)
                 if(A.posicao[n1][n2] == 1)
                 {
                     A.posicao[n1][n2] = 0;
-                    A.posicao[n1-1][n2] = 1;
+                    A.posicao[(n1-1)][n2] = 1;
+                    break;
                 }
             }
         }     
@@ -162,48 +164,60 @@ void mover(char tecla)
                 {
                     A.posicao[n1][n2] = 0;
                     printf("%d %d\n", n1, n2+1);
-                    A.posicao[n1][n2-1] = 1;
+                    A.posicao[n1][(n2-1)] = 1;
+                    break;
                 }
             }
        }
     }
     if((tecla == 's')) //&& (Lh.N1<LMAX))
     {
+    int enable=0;
+
+        for(n1=0;n1<LMAX;n1++)
+        {
+            for(n2=0;n2<CMAX;n2++)
+            {
+                if(A.posicao[n1][n2] == 1 && enable == 0)
+                {
+                    A.posicao[n1][n2] = 0;
+                    printf("\nem s: %d", n1);
+                    A.posicao[n1+1][n2] = 1; /*nao pode ser -1 pq fica igual ao caso do 'w'.*/
+                    enable=1;
+                    break;
+                }
+            }
+        }    
+    }
+    if(tecla == 't')
+    {
+    int tn1, tn2;
+        
         for(n1=0;n1<LMAX;n1++)
         {
             for(n2=0;n2<CMAX;n2++)
             {
                 if(A.posicao[n1][n2] == 1)
                 {
-                    A.posicao[n1][n2] = 0;
-                    A.posicao[n1+1][n2] = 1; /*nao pode ser -1 pq fica igual ao caso do 'w'.*/
+                    tn1=rand()%LMAX;
+                    tn2=rand()%CMAX;
+                    A.posicao[tn1][tn2]=1;
+                    A.posicao[n1][n2]=0;
                 }
             }
-        }    
+        }
     }
 }
 
 void teleporte(char tecla)
 {   
-    int n1,n2, tn1, tn2, comando, comandoinvalido, sair, d;
+    int n1,n2,comando, comandoinvalido, sair, d;
     char TECLA;
     srand(time(NULL));
-    // Lh.N1=rand()%LMAX;
-    // Lh.N2=rand()%CMAX;
-    
-    if(TECLA == 't')
-    {
-        for(n1=0;n1<LMAX; n1++)
-         for(n2=0;n2<CMAX;n2++)
-            if(A.posicao[n1][n2] == 1)
-                {
-                   // Lh.N1=rand()%LMAX;
-                   // Lh.N2=rand()%CMAX;
-                    A.posicao[tn1][tn2]=1;
-                    A.posicao[n1][n2]=0;
-                }
-    }
 
+     //   Lh.N1=rand()%LMAX;
+     //   Lh.N2=rand()%CMAX;
+    
     switch(comando)
     {
         case 'x':
