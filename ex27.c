@@ -31,7 +31,7 @@ void valinit(int nivel);
 void tabuleiro(int nivel);
 void mover(char tecla);
 void teleport(char tecla);
-void moverrobo(char tecla);
+char moverrobo(char tecla);
 
 int main(void)
 {
@@ -216,7 +216,98 @@ void mover(char tecla)
     }
 }
 
-void moverrobo(char tecla)
+char moverrobo(char tecla)
+{
+    int x, y, z, w;
+    int Probos[LMAX][CMAX];
+
+    for(z=0;z<TABMAX;z++)
+    {
+        for(w=0;w<TABMAX;w++)
+        {
+            if(Probos[z][w]==2)
+            {
+                for(x=0;x<TABMAX;x++)
+                {
+                    for(y=0;y<TABMAX;y++)
+                    {
+                        if(Probos[x][y]==3)
+                        {
+                            if((w-y)>0 && Probos[x+1][y]==0)
+                            {
+                                Probos[x+1][y]=3;
+                                Probos[x][y]=0;
+                            }
+                            if((w-y)>0 && (Probos[x+1][y]==1 || Probos[x+1][y]==3))
+                            {
+                                Probos[x+1][y]=1;
+                                Probos[x][y]=0;
+                            }
+                            if((w-y)<0 && Probos[x-1][y]==0)
+                            {
+                                Probos[x-1][y]=3;
+                                Probos[x][y]=0;
+                            }
+                            if((w-y)<0 && Probos[x+1][y]==2)
+                            {
+                                return 2;
+                            }
+                            if((w-y)<0 && (Probos[x-1][y]==1 || Probos[x-1][y]==3))
+                            {
+                                Probos[x-1][y]=1;
+                                Probos[x][y]=0;
+                            }
+                            if((w-y)>0 && Probos[x-1][y]==2)
+                            {
+                                return 2;
+                            }
+                            if((w-y)==0)
+                            {
+                                if((z-x)>0 && Probos[x][y-1]==0)
+                                {
+                                    Probos[x][y-1]=3;
+                                    Probos[x][y]=0;
+                                }
+                                if((z-x)>0 && (Probos[x][y-1]==1 || Probos[x][y-1]==3))
+                                {
+                                    Probos[x][y-1]=1;
+                                    Probos[x][y]=0;
+                                }
+                                if((z-x)>0 && Probos[x][y-1]==2)
+                                {
+                                    return 2;
+                                }
+                                if((z-x)<0 && Probos[x][y+1]==0)
+                                {
+                                    Probos[x][y+1]=3;
+                                    Probos[x][y]=0;
+                                }
+                                if((z-x)<0 && (Probos[x][y+1]==1 || Probos[x][y+1]==3))
+                                {
+                                    Probos[x][y+1]=1;
+                                    Probos[x][y]=0;
+                                }
+                                if((z-x)<0 && Probos[x][y+1]==2)
+                                {
+                                    return 2;
+                                }
+                                if((z-x)==0)
+                                {
+                                    return 2;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+                     
+    return -1;
+}
+
+
+/* void moverrobo(char tecla)
 {
 
     int r1, r2;
@@ -282,7 +373,7 @@ void moverrobo(char tecla)
         }
     }
 
-   /* if(Lr.N1==Lh.N1 && Lr.N2>Lh.N2)
+    if(Lr.N1==Lh.N1 && Lr.N2>Lh.N2)
     { 
             for(r2=0;r2<CMAX;r2--)
                 if(A.posicao[r1][r2] == 1)
@@ -333,5 +424,4 @@ void moverrobo(char tecla)
                 }
         
     }*/
-}
 
