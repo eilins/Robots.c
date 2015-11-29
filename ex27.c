@@ -224,53 +224,65 @@ void moverrobo(char tecla)
     if(Lr.N1>Lh.N1 && Lr.N2>Lh.N2)
     {
         for(r1=0;r1<LMAX;r1--)
+        {
             for(r2=0;r2<CMAX;r2--)
+            {
                 if(A.posicao[r1][r2] == 1)
                 {
                     A.posicao[r1][r2] = 0;
-                    A.posicao[(r1-1)][r2] = 1;
+                    A.posicao[(r1-1)][r2-1] = 1;
                 }
-        
-    }
-
+            }
+    
+        }
+    }   
     if(Lr.N1<Lh.N1 && Lr.N2>Lh.N2)
     { 
         for(r1=0;r1<LMAX;r1++)
+        {
             for(r2=0;r2<CMAX;r2--)
+            {
                 if(A.posicao[r1][r2] == 1)
                 {
                     A.posicao[r1][r2] = 0;
-                    A.posicao[(r1+1)][r2] = 1;
+                    A.posicao[(r1+1)][(r2-1)] = 1;
                 }
-        
+            }
+        }
     }
 
     if(Lr.N1<Lh.N1 && Lr.N2<Lh.N2)
     { 
         for(r1=0;r1<LMAX;r1++)
+        {
             for(r2=0;r2<CMAX;r2++)
+            {
                 if(A.posicao[r1][r2] == 1)
                 {
                     A.posicao[r1][r2] = 0;
-                    A.posicao[(r1)][(r2-1)] = 1;
+                    A.posicao[(r1+1)][(r2+1)] = 1;
                 }
-       
+            } 
+        }     
     }
 
 
     if(Lr.N1>Lh.N1 && Lr.N2<Lh.N2)
     {
         for(r1=0;r1<LMAX;r1--)
+        {    
             for(r2=0;r2<CMAX;r2++)
+            {
                 if(A.posicao[r1][r2] == 1)
                 {
                     A.posicao[r1][r2] = 0;
-                    A.posicao[r1][(r2+1)] = 1;
+                    A.posicao[(r1-1)][(r2+1)] = 1;
                 }
-       
+            } 
+        }
     }
 
-    if(Lr.N1==Lh.N1 && Lr.N2>Lh.N2)
+   /* if(Lr.N1==Lh.N1 && Lr.N2>Lh.N2)
     { 
             for(r2=0;r2<CMAX;r2--)
                 if(A.posicao[r1][r2] == 1)
@@ -320,6 +332,6 @@ void moverrobo(char tecla)
                     A.posicao[(r1+1)][r2] = 1;
                 }
         
-    }
+    }*/
 }
 
