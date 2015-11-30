@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define LMAX 20
+#define LMAX 23
 #define CMAX 20
 #define TABMAX 35
 #define NPEDRA 5
@@ -307,19 +307,19 @@ int moverrobo(void)
                     }
                     else
                     
-                        if(posr1 > posh1 && posr2 < posh2)
+                        if(((posr1 > posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr1-1 !=0 && posr2+1 != CMAX))
                         {
                         A.Probos[posr1][posr2] = 0;
                         A.Probos[posr1-1][posr2+1] = 1;
                         }
                         else
-                            if(posr1== posh1 && posr2 > posh2)
+                            if(((posr1== posh1 && posr2 > posh2) && A.Probos[posr1][posr2]==1) && posr2-1 !=0)
                             {
                                 A.Probos[posr1][posr2] = 0;
                                 A.Probos[posr1][posr2-1] = 1;
                             }
                             else
-                                if(posr1 == posh1 && posr2 < posh2)
+                                if(((posr1 == posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr2+1 != CMAX))
                                 {
                                     A.Probos[posr1][posr2] = 0;
                                     A.Probos[posr1][posr2+1] = 1;
