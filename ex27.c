@@ -45,6 +45,7 @@ int main(void)
         if(morto==2)
         {
             printf("\nVoce passou de nivel\n");
+            NIVEL++;
             valinit(NIVEL);
         }
         tabuleiro(NIVEL);
@@ -52,12 +53,14 @@ int main(void)
         TECLA = getchar();
         getchar();
         printf("\e[H\e[2J");
-        retorno = mover(TECLA);
+        mover(TECLA);
+        moverrobo();
         morto=moverrobo();
+       
     }
     return 0;
 }
-
+               
 void valinit(int nivel)
 { 
     int i,j;
@@ -269,32 +272,35 @@ int moverrobo(void)
         }
      }
     printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
+    
+    for(posr1=0;posr1<LMAX;posr1++)
+        for(posr2=0;posr2<LMAX;posr2++)
 
-    if(posr1 < posh1 && posr2==posh2)
+    if(((posr1 < posh1 && posr2==posh2) && A.Probos[posr1][posr2]==1) && posr1+1 != LMAX)
     {
         A.Probos[posr1][posr2] = 0;
         A.Probos[posr1+1][posr2] = 1;
     }
     else
-        if(posr1 > posh1 && posr2==posh2 )
+        if(((posr1 > posh1 && posr2==posh2) && A.Probos[posr1][posr2]==1) && posr1-1 !=0)
         {
             A.Probos[posr1][posr2] = 0;
             A.Probos[posr1-1][posr2] = 1;
         }   
         else
-            if(posr1 < posh1 && posr2 < posh2)
+            if(((posr1 < posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr1+1 != LMAX && posr2+1 != CMAX))
             {
             A.Probos[posr1][posr2] = 0;
             A.Probos[posr1+1][posr2+1] = 1;
             }
             else
-                if(posr1 < posh1 && posr2 > posh2)
+                if(((posr1 < posh1 && posr2 > posh2) && A.Probos[posr1][posr2]==1) && (posr1+1 != LMAX && posr2-1 !=0))
                 {
                 A.Probos[posr1][posr2] = 0;
                 A.Probos[posr1+1][posr2-1] = 1;
                 }
                 else
-                    if(posr1 > posh1 && posr2 > posh2)
+                    if(((posr1 > posh1 && posr2 > posh2) && A.Probos[posr1][posr2]==1) && (posr1-1 != 0 && posr2-1 != 0))
                     {
                         A.Probos[posr1][posr2] = 0;
                         A.Probos[posr1-1][posr2-1] = 1;
