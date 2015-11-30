@@ -31,7 +31,7 @@ void valinit(int nivel);
 void tabuleiro(int nivel);
 void mover(char tecla);
 void teleport(char tecla);
-char moverrobo(char tecla);
+void moverrobo(void);
 
 int main(void)
 {
@@ -46,8 +46,9 @@ int main(void)
         printf("\nDigite Uma tecla\nDigite 'x' pra sair\nDigite 'w' para mover para cima\nDigite 'a' para mover para esquerda\nDigite 's' para mover para baixo\nDigite 'd' para mover para direita\nDigite 't' para teletransportar\n"); /* menu aqui */
         TECLA = getchar();
         getchar();
-        printf("\e[H\e[2J");
+       // printf("\e[H\e[2J");
         mover(TECLA);
+        moverrobo();
     }
     return 0;
 }
@@ -55,7 +56,7 @@ int main(void)
 void valinit(int nivel)
 {
     srand(time(NULL));
-    int n3,n4;
+    int n3=0,n4;
 
     Lh.N1 =rand()%LMAX; /* Posicoes aleatorias */
     Lh.N2 =rand()%CMAX;
@@ -216,7 +217,7 @@ void mover(char tecla)
     }
 }
 
-char moverrobo(char tecla)
+/*char moverrobo(char tecla)
 {
     int x, y, z, w;
     int Probos[LMAX][CMAX];
@@ -304,15 +305,92 @@ char moverrobo(char tecla)
     }
                      
     return -1;
-}
+}*/
 
 
-/* void moverrobo(char tecla)
+void moverrobo(void)
 {
 
-    int r1, r2;
+    int h1, h2, r1, r2, posh1, posh2, posr1, posr2;
 
-    if(Lr.N1>Lh.N1 && Lr.N2>Lh.N2)
+    for(h1=0;h1<LMAX;h1++)
+    {
+        for(h2=0;h2<LMAX;h2++)
+        {
+            if(A.posicao[h1][h2] == 1)
+            {
+                posh1=h1;
+                posh2=h2;
+            }
+                
+        }
+     }
+
+    printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);
+    for(r1=0;r1<LMAX;r1++)
+    {
+        for(r2=0;r2<LMAX;r2++)
+        {
+            if(A.Probos[r1][r2] == 1)
+            {
+                posr1=r1;
+                posr2=r2;
+            }
+
+        }
+     }
+    printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
+
+    if(posr1 < posh1 && posr2==posh2)
+    {
+        A.Probos[posr1][posr2] = 0;
+        A.Probos[posr1+1][posr2] = 1;
+    }
+    else
+        if(posr1 > posh1 && posr2==posh2 )
+        {
+            A.Probos[posr1][posr2] = 0;
+            A.Probos[posr1-1][posr2] = 1;
+        }   
+        else
+            if(posr1 < posh1 && posr2 < posh2)
+            {
+            A.Probos[posr1][posr2] = 0;
+            A.Probos[posr1+1][posr2+1] = 1;
+            }
+            else
+                if(posr1 < posh1 && posr2 > posh2)
+                {
+                A.Probos[posr1][posr2] = 0;
+                A.Probos[posr1+1][posr2-1] = 1;
+                }
+                else
+                    if(posr1 > posh1 && posr2 > posh2)
+                    {
+                        A.Probos[posr1][posr2] = 0;
+                        A.Probos[posr1-1][posr2-1] = 1;
+                    }
+                    else
+                    
+                        if(posr1 > posh1 && posr2 < posh2)
+                        {
+                        A.Probos[posr1][posr2] = 0;
+                        A.Probos[posr1-1][posr2+1] = 1;
+                        }
+                        else
+                            if(posr1== posh1 && posr2 > posh2)
+                            {
+                                A.Probos[posr1][posr2] = 0;
+                                A.Probos[posr1][posr2-1] = 1;
+                            }
+                            else
+                                if(posr1 == posh1 && posr2 < posh2)
+                                {
+                                    A.Probos[posr1][posr2] = 0;
+                                    A.Probos[posr1][posr2+1] = 1;
+                                }
+       
+    /*if(Lr.N1>Lh.N1 && Lr.N2>Lh.N2)
     {
         for(r1=0;r1<LMAX;r1--)
         {
@@ -425,3 +503,5 @@ char moverrobo(char tecla)
         
     }*/
 
+    return;
+}
