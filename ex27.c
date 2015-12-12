@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define LMAX 23
+#define LMAX 20
 #define CMAX 20
 #define TABMAX 35
 #define NPEDRA 5
@@ -54,13 +54,13 @@ int main(void)
         getchar();
         printf("\e[H\e[2J");
         mover(TECLA);
-        moverrobo();
+        retorno = mover(TECLA);
         morto=moverrobo();
-       
+
     }
     return 0;
 }
-               
+
 void valinit(int nivel)
 { 
     int i,j;
@@ -68,15 +68,15 @@ void valinit(int nivel)
     for(i=0;i<LMAX;i++)
         for(j=0;j<CMAX;j++)
             A.Ppedra[i][j]=0;
-    
+
     for(i=0;i<LMAX;i++)
         for(j=0;j<CMAX;j++)
             A.Probos[i][j]=0;
-    
+
     for(i=0;i<LMAX;i++)
         for(j=0;j<CMAX;j++)
             A.posicao[i][j]=0;
-    
+
     srand(time(NULL));
     int n3=0,n4;
 
@@ -254,9 +254,9 @@ int moverrobo(void)
                 posh1=h1;
                 posh2=h2;
             }
-                
+
         }
-     }
+    }
 
     printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);
     for(r1=0;r1<LMAX;r1++)
@@ -270,61 +270,63 @@ int moverrobo(void)
             }
 
         }
-     }
-    printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
-    
-    for(posr1=0;posr1<LMAX;posr1++)
-        for(posr2=0;posr2<LMAX;posr2++)
-
-    if(((posr1 < posh1 && posr2==posh2) && A.Probos[posr1][posr2]==1) && posr1+1 != LMAX)
-    {
-        A.Probos[posr1][posr2] = 0;
-        A.Probos[posr1+1][posr2] = 1;
     }
-    else
-        if(((posr1 > posh1 && posr2==posh2) && A.Probos[posr1][posr2]==1) && posr1-1 !=0)
+    printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
+
+    for(posr1=0;posr1<LMAX;posr1++)
+    {
+        for(posr2=0;posr2<LMAX;posr2++)
         {
-            A.Probos[posr1][posr2] = 0;
-            A.Probos[posr1-1][posr2] = 1;
-        }   
-        else
-            if(((posr1 < posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr1+1 != LMAX && posr2+1 != CMAX))
+            if(((posr1 < posh1 && posr2==posh2) && A.Probos[posr1][posr2] ==1) && posr1+1 != LMAX)
             {
-            A.Probos[posr1][posr2] = 0;
-            A.Probos[posr1+1][posr2+1] = 1;
+                A.Probos[posr1][posr2] = 0;
+                A.Probos[posr1+1][posr2] = 1;
             }
             else
-                if(((posr1 < posh1 && posr2 > posh2) && A.Probos[posr1][posr2]==1) && (posr1+1 != LMAX && posr2-1 !=0))
+                if(((posr1 > posh1 && posr2==posh2) && A.Probos[posr1][posr2] == 1) && posr1-1 != 0)
                 {
-                A.Probos[posr1][posr2] = 0;
-                A.Probos[posr1+1][posr2-1] = 1;
-                }
+                    A.Probos[posr1][posr2] = 0;
+                    A.Probos[posr1-1][posr2] = 1;
+                }   
                 else
-                    if(((posr1 > posh1 && posr2 > posh2) && A.Probos[posr1][posr2]==1) && (posr1-1 != 0 && posr2-1 != 0))
+                    if(((posr1 < posh1 && posr2 < posh2) && A.Probos[posr1][posr2] == 1) && (posr1+1 != LMAX && posr2+1 != CMAX))
                     {
                         A.Probos[posr1][posr2] = 0;
-                        A.Probos[posr1-1][posr2-1] = 1;
+                        A.Probos[posr1+1][posr2+1] = 1;
                     }
                     else
-                    
-                        if(((posr1 > posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr1-1 !=0 && posr2+1 != CMAX))
+                        if(((posr1 < posh1 && posr2 > posh2) && A.Probos[posr1][posr2] == 1) && (posr1+1 != LMAX && posr2-1 != 0))
                         {
-                        A.Probos[posr1][posr2] = 0;
-                        A.Probos[posr1-1][posr2+1] = 1;
+                            A.Probos[posr1][posr2] = 0;
+                            A.Probos[posr1+1][posr2-1] = 1;
                         }
                         else
-                            if(((posr1== posh1 && posr2 > posh2) && A.Probos[posr1][posr2]==1) && posr2-1 !=0)
+                            if(((posr1 > posh1 && posr2 > posh2) && A.Probos[posr1][posr2] == 1) && (posr1-1 != 0 && posr2-1 != 0))
                             {
                                 A.Probos[posr1][posr2] = 0;
-                                A.Probos[posr1][posr2-1] = 1;
+                                A.Probos[posr1-1][posr2-1] = 1;
                             }
                             else
-                                if(((posr1 == posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr2+1 != CMAX))
+
+                                if(((posr1 > posh1 && posr2 < posh2) && A.Probos[posr1][posr2] == 1) && (posr1-1 != 0 && posr2+1 != CMAX))
                                 {
                                     A.Probos[posr1][posr2] = 0;
-                                    A.Probos[posr1][posr2+1] = 1;
+                                    A.Probos[posr1-1][posr2+1] = 1;
                                 }
-        
+                                else
+                                    if(((posr1== posh1 && posr2 > posh2) && A.Probos[posr1][posr2] == 1) && posr2-1 != 0)
+                                    {
+                                        A.Probos[posr1][posr2] = 0;
+                                        A.Probos[posr1][posr2-1] = 1;
+                                    }
+                                    else
+                                        if(((posr1 == posh1 && posr2 < posh2) && A.Probos[posr1][posr2]==1) && (posr2+1 != CMAX))
+                                        {
+                                            A.Probos[posr1][posr2] = 0;
+                                            A.Probos[posr1][posr2+1] = 1;
+                                        }
+        }
+    }
     for(h1=0;h1<LMAX;h1++)
     {
         for(h2=0;h2<LMAX;h2++)
@@ -335,7 +337,7 @@ int moverrobo(void)
                 posh2=h2;
             }
         }
-     }
+    }
 
     for(r1=0;r1<LMAX;r1++)
     {
@@ -348,35 +350,36 @@ int moverrobo(void)
             }
         }
     }
-        printf("\n\nNOVA POSICAO ROBO E HUMANO: %d %d    %d %d\n", posr1, posr2, posh1, posh2);
-            if(posr1 == posh1 && posr2 == posh2)
-            {
-                printf("\n O robo lhe pegou! \n");
-                return 1;
-            }
+    printf("\n\nNOVA POSICAO ROBO E HUMANO: %d %d    %d %d\n", posr1, posr2, posh1, posh2);
+    if(posr1 == posh1 && posr2 == posh2)
+    {
+        printf("\n O robo lhe pegou! \n");
+        return 1;
+    } 
+
 int c=0;
 
-        for(r1=0;r1<LMAX;r1++)
+    for(r1=0; r1<LMAX; r1++)
+    {
+        for(r2=0; r2<LMAX; r2++)
         {
-            for(r2=0;r2<LMAX;r2++)
+            if(A.Ppedra[r1][r2] == 1)
             {
-                if(A.Ppedra[r1][r2] == 1)
-                 {
-                   pospedra[c][0]=r1;
-                    pospedra[c][1]=r2;
-                    c=c+1;
-                 }
+                pospedra[c][0]=r1;
+                pospedra[c][1]=r2;
+                c=c+1;
             }
         }
-        
-        for(c=0;c<5;c++)
+    }
+
+    for(c=0;c<5;c++)
+    {
+        if(posr1==pospedra[c][0] && posr2==pospedra[c][1])
         {
-            if(posr1==pospedra[c][0] && posr2==pospedra[c][1])
-            {
-                printf("\nRobo Destruido!\n");
-                return 2;
-            }
+            printf("\nRobo Destruido!\n");
+            return 2;
         }
+    }
 
     return 0;
 }
