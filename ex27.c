@@ -8,7 +8,8 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-/*#include <locale.h>*/
+#include <locale.h>
+#include <wchar.h>
 
 #define LMAX 15
 #define CMAX 15
@@ -19,22 +20,22 @@
 #define PNIVEL 100
 #define PROBO 10
 
-/* Bordas UTF 8 
+/* Bordas UTF 8 */
 
-#define WUL L'\u2518'  ^VU2518 ┘ 
-#define WDL L'\u2510'  ^VU2510 ┐ 
-#define WDR L'\u250c'  ^VU250c ┌ 
-#define WUR L'\u2514'  ^VU2514 └ 
-#define WVH L'\u253c'  ^VU253c ┼ 
-#define WHH L'\u2500'  ^VU2500 ─ 
-#define WVR L'\u251c'  ^VU251c ├ 
-#define WVL L'\u2524'  ^VU2524 ┤ 
-#define WUH L'\u2534'  ^VU2534 ┴ 
-#define WDF L'\u252c'  ^VU252c ┬ 
-#define WVV L'\u2502'  ^VU2502 │ 
-#define WGL L'\u2571'  ^VU2571 ╱ 
-#define WGR L'\u2572'  ^VU2572 ╲/
-#define WGX L'\u2573'  ^VU2573 ╳ */ 
+#define WUL L'\u2518' /* ^VU2518 ┘ */
+#define WDL L'\u2510' /* ^VU2510 ┐ */
+#define WDR L'\u250c' /* ^VU250c ┌ */
+#define WUR L'\u2514' /* ^VU2514 └ */
+#define WVH L'\u253c' /* ^VU253c ┼ */
+#define WHH L'\u2500' /* ^VU2500 ─ */
+#define WVR L'\u251c' /* ^VU251c ├ */
+#define WVL L'\u2524' /* ^VU2524 ┤ */
+#define WUH L'\u2534' /* ^VU2534 ┴ */
+#define WDF L'\u252c' /* ^VU252c ┬ */
+#define WVV L'\u2502' /* ^VU2502 │ */
+#define WGL L'\u2571' /* ^VU2571 ╱ */
+#define WGR L'\u2572' /* ^VU2572 ╲ */
+#define WGX L'\u2573' /* ^VU2573 ╳ */
 
 struct lista
 {
@@ -140,33 +141,35 @@ void tabuleiro(int nivel)
 {
     int n1,n2;
 
-    /* setlocale(LC_ALL, "");  para caracteres UTF-8*/
+    setlocale(LC_ALL, ""); /* para caracteres UTF-8*/
 
     printf("\nJOGO ROBOTS!\n");
-    printf("\n ");
-    for(n1=0;n1<TABMAX;n1++) /*  borda de cima */
-        printf("- ");
-    printf("\n");
+    printf("\n%lc", WDR);
+    for(n1=0;n1<CMAX*2+1;n1++) /*  borda de cima */
+        printf("%lc", WHH);
+    printf("%lc", WDL);
 
     for(n1=0;n1<CMAX;n1++)
     {
-        printf("| ");      /*  borda esquerda */
+        printf("\n%lc", WVV);      /*  borda esquerda */
         for(n2=0;n2<LMAX;n2++)/* mapa */
         {
             if(A.posicao[n1][n2] == 1)
-                printf(" I ");
+                printf("I%lc", WVV);
             else if(A.Ppedra[n1][n2] == 1)
-                printf(" @ ");
+                printf("@%lc", WVV);
             else if(A.Probos[n1][n2] == 1)
-                printf(" + ");
+                printf("+%lc", WVV);
             else
-                printf(" . ");
+                printf(" %lc", WVV);
         }
-        printf("|\n");
+        printf("%lc", WVV);
     }
-    printf("  ");
-    for(n1=0;n1<TABMAX;n1++)
-        printf("- ");
+
+    printf("\n%lc", WUR);
+    for(n1=0;n1<CMAX*2+1;n1++)
+        printf("%lc", WHH);
+    printf("%lc\n", WUL);
     printf("\n Nivel: %d \n Score: %g \n",nivel, A.score);
 
 }
@@ -263,21 +266,21 @@ char mover(char tecla)
         }
     }
 
- /*   char comando;  ---- comando invalido caso o usuario digite errado
-    int comandoinvalido;
-    do
-    { 
-        comando = getchar();
-    }
-    while(comando=='\n');
-    if(comando != 'w' &&  comando != 'a' && comando != 's' && comando != 'd' && comando != 't' && comando != 'x')
-    {
-        printf("\nComando invalido. Por favor, digite novamente: ");
-        comandoinvalido=1;
-    }
-    else 
-        comandoinvalido=0;
-    return comando; */ 
+    /*   char comando;  ---- comando invalido caso o usuario digite errado
+         int comandoinvalido;
+         do
+         { 
+         comando = getchar();
+         }
+         while(comando=='\n');
+         if(comando != 'w' &&  comando != 'a' && comando != 's' && comando != 'd' && comando != 't' && comando != 'x')
+         {
+         printf("\nComando invalido. Por favor, digite novamente: ");
+         comandoinvalido=1;
+         }
+         else 
+         comandoinvalido=0;
+         return comando; */ 
     return tecla;
 }
 
@@ -300,7 +303,7 @@ int moverrobo(void)
         }
     }
 
-   /* printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);*/
+    /* printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);*/
     printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
     for(r1=0;r1<LMAX;r1++)
     {
@@ -314,7 +317,7 @@ int moverrobo(void)
 
         }
     }
-   /* printf("\n POSICAO ROBO %d %d\n", posr1, posr2);*/
+    /* printf("\n POSICAO ROBO %d %d\n", posr1, posr2);*/
 
     if(((posr1[n] < posh1 && posr2[n]==posh2) && A.Probos[posr1[n]][posr2[n]] ==1))
     {
@@ -322,48 +325,48 @@ int moverrobo(void)
         A.Probos[posr1[n]+1][posr2[n]] = 1;
     }
     // else
-        if(((posr1[n] > posh1 && posr2[n]==posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
-        {
-            A.Probos[posr1[n]][posr2[n]] = 0;
-            A.Probos[posr1[n]-1][posr2[n]] = 1;
-        }   
-      //  else
-            if(((posr1[n] < posh1 && posr2[n] < posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
-            {
-                A.Probos[posr1[n]][posr2[n]] = 0;
-                A.Probos[posr1[n]+1][posr2[n]+1] = 1;
-            }
-        //    else
-                if(((posr1[n] < posh1 && posr2[n] > posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
-                {
-                    A.Probos[posr1[n]][posr2[n]] = 0;
-                    A.Probos[posr1[n]+1][posr2[n]-1] = 1;
-                }
-          //      else
-                    if(((posr1[n] > posh1 && posr2[n] > posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
-                    {
-                        A.Probos[posr1[n]][posr2[n]] = 0;
-                        A.Probos[posr1[n]-1][posr2[n]-1] = 1;
-                    }
-            //        else
+    if(((posr1[n] > posh1 && posr2[n]==posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]-1][posr2[n]] = 1;
+    }   
+    //  else
+    if(((posr1[n] < posh1 && posr2[n] < posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]+1][posr2[n]+1] = 1;
+    }
+    //    else
+    if(((posr1[n] < posh1 && posr2[n] > posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]+1][posr2[n]-1] = 1;
+    }
+    //      else
+    if(((posr1[n] > posh1 && posr2[n] > posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]-1][posr2[n]-1] = 1;
+    }
+    //        else
 
-                        if(((posr1[n] > posh1 && posr2[n] < posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
-                        {
-                            A.Probos[posr1[n]][posr2[n]] = 0;
-                            A.Probos[posr1[n]-1][posr2[n]+1] = 1;
-                        }
-              //          else
-                            if(((posr1[n]== posh1 && posr2[n] > posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
-                            {
-                                A.Probos[posr1[n]][posr2[n]] = 0;
-                                A.Probos[posr1[n]][posr2[n]-1] = 1;
-                            }
-                //            else
-                                if(((posr1[n] == posh1 && posr2[n] < posh2) && A.Probos[posr1[n]][posr2[n]]==1))
-                                {
-                                    A.Probos[posr1[n]][posr2[n]] = 0;
-                                    A.Probos[posr1[n]][posr2[n]+1] = 1;
-                                }
+    if(((posr1[n] > posh1 && posr2[n] < posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]-1][posr2[n]+1] = 1;
+    }
+    //          else
+    if(((posr1[n]== posh1 && posr2[n] > posh2) && A.Probos[posr1[n]][posr2[n]] == 1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]][posr2[n]-1] = 1;
+    }
+    //            else
+    if(((posr1[n] == posh1 && posr2[n] < posh2) && A.Probos[posr1[n]][posr2[n]]==1))
+    {
+        A.Probos[posr1[n]][posr2[n]] = 0;
+        A.Probos[posr1[n]][posr2[n]+1] = 1;
+    }
 
 
     for(r1=0;r1<LMAX;r1++)
@@ -378,7 +381,7 @@ int moverrobo(void)
         }
     }
     printf("\n\nNOVA POSICAO ROBO E HUMANO: %d %d    %d %d\n", posr1[n], posr2[n], posh1, posh2);
-    
+
     int c=0;
 
     for(r1=0; r1<LMAX; r1++)
@@ -401,25 +404,25 @@ int moverrobo(void)
             printf("\nRobo Destruido!\n");
             A.Probos[posr1[n]][posr2[n]] = 0;
             A.score = A.score+PROBO;
-            
+
         }
     }
     int n1, n2, n3=0;
-         for(n1=0; n1<LMAX; n1++)
-         {
-             for(n2=0; n2<CMAX; n2++)
-             {
-                 if(A.Probos[n1][n2] == 1)
-                 {
-                     n3 = 1;
-                 }
-             }
-         }
-         if(n3 == 0)
-         {
-             printf("todos morreram \n");
-             return 2;
-         }
+    for(n1=0; n1<LMAX; n1++)
+    {
+        for(n2=0; n2<CMAX; n2++)
+        {
+            if(A.Probos[n1][n2] == 1)
+            {
+                n3 = 1;
+            }
+        }
+    }
+    if(n3 == 0)
+    {
+        printf("todos morreram \n");
+        return 2;
+    }
 
     if(posr1[n] == posh1 && posr2[n] == posh2)
     {
@@ -427,7 +430,7 @@ int moverrobo(void)
         A.score = 0;
         return 1;
     }
-    
+
 
     return 0;
 }
