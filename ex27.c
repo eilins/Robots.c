@@ -285,21 +285,7 @@ char mover(char tecla)
         }
     }
 
-    /*   char comando;  ---- comando invalido caso o usuario digite errado
-         int comandoinvalido;
-         do
-         { 
-         comando = getchar();
-         }
-         while(comando=='\n');
-         if(comando != 'w' &&  comando != 'a' && comando != 's' && comando != 'd' && comando != 't' && comando != 'x')
-         {
-         printf("\nComando invalido. Por favor, digite novamente: ");
-         comandoinvalido=1;
-         }
-         else 
-         comandoinvalido=0;
-         return comando; */ 
+    
     return tecla;
 }
 
@@ -322,7 +308,7 @@ int moverrobo(void)
         }
     }
 
-    /* printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);*/
+    
 //    printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
     for(r1=0;r1<LMAX;r1++)
     {
