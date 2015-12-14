@@ -51,11 +51,11 @@ struct lugar
     int N2;
 }Lr,Lh,Lp; /* R ==robo , H == humano, P==pedra, L ==lugar */
 
-void valinit(int nivel);
-void tabuleiro(int nivel);
-char mover(char tecla);
-void teleport(char tecla);
-int moverrobo(int n, int antigo);
+void valinit(int nivel); /* inicializao das funcoes */
+void tabuleiro(int nivel); /* condicoes para preenchimento do tabuleiro */
+char mover(char tecla); /* condicoes para movimentar o humano */
+/*void teleport(char tecla); */
+int moverrobo(int n, int antigo); /* condicoes para movimentar o robo */
 
 int main(void)
 {
@@ -64,23 +64,23 @@ int main(void)
     int retorno;
     valinit(NIVEL);
 
-    while(morto != 1 && retorno!='x')/*|| sair ==0 ) || (NIVELUP == 0)) */
+    while(morto != 1 && retorno!='x')
     {   
         ANTIGO = -1;
         if(morto==2)
         {
             printf("\nVoce passou de nivel\n");
             NIVEL++;
-            A.score = A.score+PNIVEL;
+            A.score = A.score+PNIVEL; 
             valinit(NIVEL);
         }
         tabuleiro(NIVEL);
-        printf("\nDigite Uma tecla\nDigite 'x' pra sair\nDigite 'w' para mover para cima\nDigite 'a' para mover para esquerda\nDigite 's' para mover para baixo\nDigite 'd' para mover para direita\nDigite 't' para teletransportar\n"); /* menu aqui */
+        printf("\nDigite Uma tecla\nDigite 'x' pra sair\nDigite 'w' para mover para cima\nDigite 'a' para mover para esquerda\nDigite 's' para mover para baixo\nDigite 'd' para mover para direita\nDigite 't' para teletransportar\n"); /* menu */
         TECLA = getchar();
         if(TECLA == 'x')
             return 0;
         getchar();
-        printf("\e[H\e[2J");
+        printf("\e[H\e[2J"); /* funcao para limpar a tela */
         mover(TECLA);
         for(i=0; i<NIVEL; i++)
         {
@@ -88,7 +88,7 @@ int main(void)
             ANTIGO++;
         }
     }
-        printf("SCORE : %g", A.score);
+        printf("SCORE : %g", A.score); /* imprimir o score a cada nivel */
         return 0;
     }
 
@@ -96,11 +96,11 @@ void valinit(int nivel)
 { 
         int i,j;
 
-        for(i=0;i<LMAX;i++)
+        for(i=0;i<LMAX;i++) /* posicao da pedra no tabuleiro */
             for(j=0;j<CMAX;j++)
                 A.Ppedra[i][j]=0;
 
-        for(i=0;i<LMAX;i++)
+        for(i=0;i<LMAX;i++) /* posicao dos robos no tabuleiro */
             for(j=0;j<CMAX;j++)
                 A.Probos[i][j]=0;
 
@@ -115,7 +115,7 @@ void valinit(int nivel)
         Lh.N2 =rand()%CMAX;
         A.posicao[Lh.N1][Lh.N2] = 1; /* Comeca na posicao [0][0] */
 
-        for(n4=0;n4<nivel;n4++)    
+        for(n4=0;n4<nivel;n4++) /* condicao para a quantidade de robo a cada nivel */   
         {
             while(n3!=-1) //infinito
             {
@@ -128,7 +128,7 @@ void valinit(int nivel)
                 }
             }
         }
-        for(n4=0;n4<(NPEDRA);n4++)
+        for(n4=0;n4<(NPEDRA);n4++) /* condicao para a quantidade de pedra por nivel */
         {
             while(n3!=-1) //infinito
             {
@@ -163,18 +163,18 @@ void valinit(int nivel)
         for(n1=0;n1<CMAX;n1++)
         {
             printf("\n%lc", WVV);      /*  borda esquerda */
-            for(n2=0;n2<CMAX;n2++)/* mapa */
+            for(n2=0;n2<CMAX;n2++)/* preencher  mapa */
             {
-                if(A.posicao[n1][n2] == 1)
+                if(A.posicao[n1][n2] == 1) /* humano */
                     printf("I%lc", WVV);
-                else if(A.Ppedra[n1][n2] == 1)
+                else if(A.Ppedra[n1][n2] == 1) /* pedra */
                     printf("@%lc", WVV);
-                else if(A.Probos[n1][n2] == 1)
+                else if(A.Probos[n1][n2] == 1) /* robo */
                     printf("+%lc", WVV);
-                else if(A.Probos[n1][n2] == 2)
+                else if(A.Probos[n1][n2] == 2) /* lixo */
                     printf("$%lc", WVV);
                 else
-                    printf(" %lc", WVV);
+                    printf(" %lc", WVV); /* espaço vazio*/
             }
 
             if(n1<CMAX-1)
@@ -208,7 +208,7 @@ void valinit(int nivel)
 
         printf(" ----------- %c ------------- \n",tecla);
 
-        if((tecla == 'd')) //&& (Lh.N2<CMAX))
+        if((tecla == 'd')) /* condicao para o humano andar para direita */
         {
             for(n1=0;n1<LMAX;n1++)
             {
@@ -217,15 +217,13 @@ void valinit(int nivel)
                     if((A.posicao[n1][n2] == 1 && (n2+1 != LMAX)) && A.Ppedra[n1][n2+1] == 0)
                     {
                         A.posicao[n1][n2] = 0;
-                        // printf("%d %d\n", n1, n2-1);
                         A.posicao[n1][(n2+1)] = 1;
-                        // printf("&&& A.posicao[%d][%d] = %d '1'\n", n1, n2+1, A.posicao[n1][n2+1]);
                         break;
                     }
                 }
             }    
         }   
-        if((tecla == 'w')) //&& (Lh.N1<0))
+        if((tecla == 'w')) /* condicao para o humano andar para cima */
         {
             for(n1=0;n1<LMAX;n1++)
             {
@@ -240,7 +238,7 @@ void valinit(int nivel)
                 }
             }     
         }
-        if((tecla == 'a')) //&& (Lh.N2<0))
+        if((tecla == 'a')) /* condicao para o humano andar para esquerda */
         {
             for(n1=0;n1<LMAX;n1++)
             {
@@ -256,7 +254,7 @@ void valinit(int nivel)
                 }
             }
         }
-        if((tecla == 's')) //&& (Lh.N1<LMAX))
+        if((tecla == 's')) /* condicao para o humano andar para baixo */
         {
             int enable=0;
 
@@ -275,33 +273,33 @@ void valinit(int nivel)
                 }
             }    
         }
-        if(tecla == 't')
+    
+        if(tecla == 't') /* condicao para funcao teletransporte do humano */
         { 
             int tn1, tn2, n3=1;
             A.score = A.score - PTELE;
             for(n1=0;n1<LMAX;n1++)
-            {
+            { 
                 for(n2=0;n2<CMAX;n2++)
                 {
-                    if(A.posicao[tn1][tn2]=0)  
+                    if(A.posicao[tn1][tn2]=1)  
                     { 
                         do{
-                            tn1=rand()%LMAX;
-                            tn2=rand()%CMAX;
-                            if(A.Ppedra[tn1][tn2] == 0)
-                            {
-                                A.posicao[tn1][tn2]=1;
-                                A.posicao[n1][n2]=0;
-                                break;
-                            }
-                        }while(n3 != 0);
 
+                                tn1=rand()%LMAX;
+                                tn2=rand()%CMAX;
+                                if(A.Ppedra[tn1][tn2] == 0)
+                                {
+                                    A.posicao[tn1][tn2]=1;
+                                    A.posicao[n1][n2]=0;
+                                    break;
+                                }
+                     }while(n3 != 0);
                     }
                 }
-            }
-        }
-
-
+             }
+          }
+        
         return tecla;
     }
 
@@ -310,7 +308,7 @@ int moverrobo(int n, int antigo)
 
         int  h1, h2, r1, r2, posh1, posh2, posr1[NIVELMAX], posr2[NIVELMAX], pospedra[5][2];
 
-        /*    printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);*/
+        printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2); /* posicao atual do humano no tabuleiro */
         for(h1=0;h1<LMAX;h1++)
         {
             for(h2=0;h2<LMAX;h2++)
@@ -325,7 +323,7 @@ int moverrobo(int n, int antigo)
         }
 
 
-        //    printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
+        printf("\n POSICAO ROBO %d %d\n", posr1, posr2); /* condicao para o robo seguir o humano */
         for(r1=0;r1<LMAX;r1++)
         {
             for(r2=0;r2<LMAX;r2++)
@@ -338,8 +336,7 @@ int moverrobo(int n, int antigo)
 
             }
         }
-        /* printf("\n POSICAO ROBO %d %d\n", posr1, posr2);*/
-
+        
         if(((posr1[n] < posh1 && posr2[n]==posh2) && A.Probos[posr1[n]][posr2[n]] ==1))
         {
             A.Probos[posr1[n]][posr2[n]] = 0;
@@ -405,7 +402,7 @@ int moverrobo(int n, int antigo)
 
         int c=0;
 
-        for(r1=0; r1<LMAX; r1++)
+        for(r1=0; r1<LMAX; r1++) /* para evitar de duas pedras no mesmo ponto */
         {
             for(r2=0; r2<LMAX; r2++)
             {
@@ -418,7 +415,7 @@ int moverrobo(int n, int antigo)
             }
         }
 
-        for(c=0;c<5;c++)
+        for(c=0;c<5;c++) /* quando a posicao do robo for igual a da pedra */
         {
             if(posr1[n]==pospedra[c][0] && posr2[n]==pospedra[c][1])
             {
@@ -431,13 +428,13 @@ int moverrobo(int n, int antigo)
         int n1, n2, n3=0;
 
         /* if(posr1[n] == posr1[n-1] && posr1[n] == posr1[n-1])
-         * {
-         *      A.Probos[n1][n2] = 2;
-         *      printf("\n Oi,os robos se chocaram\n");
-         *      return 2;
-         *      }
-         */
-        for(n1=0; n1<LMAX; n1++)
+          {
+               A.Probos[n1][n2] = 2;
+               printf("\n Oi,os robos se chocaram\n");
+               return 2;
+               } */
+        
+        for(n1=0; n1<LMAX; n1++) /* quando a posicao de dois robos foram a mesma, ele torna -se 1 */
         {
             for(n2=0; n2<CMAX; n2++)
             {
@@ -447,13 +444,13 @@ int moverrobo(int n, int antigo)
                 }
             }
         }
-        if(n3 == 0)
+         if(n3 == 0) /* quando o numero de robos forem igual a zero*/
         {
             printf("todos morreram \n");
             return 2;
-        }
+        } 
 
-        if(posr1[n] == posh1 && posr2[n] == posh2)
+        if(posr1[n] == posh1 && posr2[n] == posh2) /* quando a posicao do robo e a do humano forem a mesma */
         {
             printf("\n O robo lhe pegou! \n");
             A.score = 0;
