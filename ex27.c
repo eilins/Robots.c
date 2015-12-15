@@ -1,6 +1,6 @@
 /*Ex27.c: Desenvolver o jogo Robots em linguagem C.
  * Autores: 
- * Flavio Henrique Duarte Santos Filhos
+ * Flavio Henrique Duarte Santos Filho
  * Vinicius Lins de Sa
  * Orientador: Ruben C. Benante
  * Disciplina: Informatica para Automacao e Controle*/
@@ -393,7 +393,11 @@ int moverrobo(int n, int antigo)
 =======
     int  h1, h2, r1, r2, posh1, posh2, posr1[NIVELMAX], posr2[NIVELMAX], pospedra[5][2];
 
+<<<<<<< HEAD
     /* printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);  posicao atual do humano no tabuleiro */
+>>>>>>> develop
+=======
+    /* printf("\nPOSICAO HUMANO %d %d\n", posh1, posh2);  posicao do humano no tabuleiro */
 >>>>>>> develop
     for(h1=0;h1<LMAX;h1++)
     {
@@ -413,7 +417,11 @@ int moverrobo(int n, int antigo)
     printf("\n POSICAO ROBO %d %d\n", posr1, posr2);
 =======
 
+<<<<<<< HEAD
     /* printf("\n POSICAO ROBO %d %d\n", posr1, posr2);  condicao para o robo seguir o humano */
+>>>>>>> develop
+=======
+    /* printf("\n POSICAO ROBO %d %d\n", posr1, posr2); posicao do robo no tabuleiro */
 >>>>>>> develop
     for(r1=0;r1<LMAX;r1++)
     {
@@ -426,10 +434,14 @@ int moverrobo(int n, int antigo)
             }
 
         }
+<<<<<<< HEAD
     }
 <<<<<<< HEAD
     /* printf("\n POSICAO ROBO %d %d\n", posr1, posr2);*/
 =======
+>>>>>>> develop
+=======
+    }              /* movimentacao do robo atras do humano */
 >>>>>>> develop
 
     if(((posr1[n] < posh1 && posr2[n]==posh2) && A.Probos[posr1[n]][posr2[n]] ==1))
